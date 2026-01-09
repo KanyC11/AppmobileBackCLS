@@ -13,7 +13,7 @@ return new class extends Migration
     {
        Schema::create('sn_evenement_intervenant', function (Blueprint $table) {
     $table->id();
-    $table->foreignId('intervenant_id')->constrained('intervenants')->onDelete('cascade');
+    $table->foreignId('intervenant_id')->constrained('sn_intervenants')->onDelete('cascade');
     $table->foreignId('evenement_id')->constrained('sn_evenements')->onDelete('cascade');
     $table->timestamps();
 });
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('evenement_intervenants');
+        Schema::dropIfExists('sn_evenement_intervenant');
     }
 };

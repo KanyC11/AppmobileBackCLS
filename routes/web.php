@@ -42,7 +42,7 @@ Route::get('/test-db', function () {
         'libelle' => 'Article lancement',
         'description' => 'Document de test',
         'fichier' => 'artiche',
-        'categorie' => $categorie->id, // obligatoire
+        'categorie_id' => $categorie->id, // obligatoire
     ]);
 
     //  Test Membre
@@ -61,9 +61,9 @@ Route::get('/test-db', function () {
         'titre' => 'Podcast Tech',
         'libelle' => 'test podcast',
         'description' => 'Podcast sur les technologies',
-        'membre' => '01',
+        'membre_id' => $membre->id,
         'fichier'=> ' ijj',
-        'categorie'=> '9',
+        'categorie_id'=> $categorie->id,
         'lien_audio' => 'https://example.com/audio.mp3',
         'date_publication' => '2026-01-08',
     ]);

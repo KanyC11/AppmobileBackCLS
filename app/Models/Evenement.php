@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Evenement extends Model
 {
-    protected $table = 'sn_evenement';
+    protected $table = 'sn_evenements';
 
     protected $fillable = [
         'libelle',
@@ -22,9 +22,9 @@ class Evenement extends Model
     {
         return $this->belongsToMany(
             Intervenant::class,
-            'sn_evenemement_intervenant',
-            'evenement',
-            'intervenant'
+            'sn_evenement_intervenant',
+            'evenement_id',
+            'intervenant_id'
         );
     }
 }

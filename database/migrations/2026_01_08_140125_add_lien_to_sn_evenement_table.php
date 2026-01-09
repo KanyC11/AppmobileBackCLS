@@ -11,16 +11,12 @@ return new class extends Migration
      */
     public function up(): void
 {
-    Schema::table('sn_evenement', function (Blueprint $table) {
-        $table->string('lien')->nullable()->after('lieu'); // nullable pour ne pas casser les anciens enregistrements
-    });
+    // Cette migration n'est plus nécessaire car 'lien' est déjà dans la table 'sn_evenements'
 }
 
 public function down(): void
 {
-    Schema::table('sn_evenement', function (Blueprint $table) {
-        $table->dropColumn('lien');
-    });
+    // Rien à revenir
 }
 
   

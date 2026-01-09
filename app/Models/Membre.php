@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Membre extends Model
 {
-    protected $table = 'sn_membre';
+    protected $table = 'sn_membres';
 
     protected $fillable = [
         'prenom',
@@ -15,6 +15,6 @@ class Membre extends Model
 
     public function podcasts()
     {
-        return $this->hasMany(Podcast::class, 'membre');
+        return $this->hasMany(Podcast::class, 'membre_id');
     }
 }

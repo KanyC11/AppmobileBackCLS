@@ -6,23 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Podcast extends Model
 {
-    protected $table = 'sn_podcast';
+    protected $table = 'sn_podcasts';
 
     protected $fillable = [
         'libelle',
         'description',
-        'membre',
+        'membre_id',
         'fichier',
-        'categorie'
+        'categorie_id'
     ];
 
     public function categorie()
     {
-        return $this->belongsTo(Categorie::class, 'categorie');
+        return $this->belongsTo(Categorie::class, 'categorie_id');
     }
 
     public function membre()
     {
-        return $this->belongsTo(Membre::class, 'membre');
+        return $this->belongsTo(Membre::class, 'membre_id');
     }
 }

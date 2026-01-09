@@ -16,6 +16,13 @@ Route::apiResource('categories', CategorieController::class);
 Route::apiResource('documents', DocumentController::class);
 Route::apiResource('membres', MembreController::class);
 Route::apiResource('podcasts', PodcastController::class);
+
+// Routes  pour les documents
+Route::get('/documents/{id}/download', [DocumentController::class, 'download'])->name('documents.download');
+
+// Routes  pour les podcasts
+Route::get('/podcasts/{id}/download', [PodcastController::class, 'download'])->name('podcasts.download');
+Route::get('/podcasts/{id}/stream', [PodcastController::class, 'stream'])->name('podcasts.stream');
 Route::get('/dashboard', function () {
     return response()->json([
         'intervenants' => \App\Models\Intervenant::all(),

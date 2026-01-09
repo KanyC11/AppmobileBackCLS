@@ -7,7 +7,7 @@ use App\Models\Evenement;
 
 class Intervenant extends Model
 {
-    protected $table = 'intervenant';
+    protected $table = 'sn_intervenants';
 
     protected $fillable = [
         'prenom',
@@ -19,9 +19,9 @@ class Intervenant extends Model
     {
         return $this->belongsToMany(
             Evenement::class,
-            'sn_evenemement_intervenant',
-            'intervenant',
-            'evenement'
+            'sn_evenement_intervenant',
+            'intervenant_id',
+            'evenement_id'
         );
     }
 }
