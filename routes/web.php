@@ -1,12 +1,80 @@
 <?php
-use App\Models\SnEvenement;
+
 use Illuminate\Support\Facades\Route;
+use App\Models\Intervenant;
+use App\Models\Evenement;
+use App\Models\Document;
+use App\Models\Categorie;
+use App\Models\Membre;
+use App\Models\Podcast;
 
-Route::get('/', function () {
-    return view('welcome');
-});    
-   
 Route::get('/test-db', function () {
-    return SnEvenement::all();    
-});
 
+    //  Test Intervenant
+    $intervenant = Intervenant::create([
+        'prenom' => 'Elho',
+        'nom' => 'Diop',
+        'sexe' => 'M',
+    ]);
+
+    //  Test Evenement
+    $evenement = Evenement::create([
+        'libelle' => 'Conférence Tech',
+        'description' => 'Test de l\'evenement',
+        'lien' => 'https://example.com',
+        'date_debut' => '2026-01-10 10:00:00',
+        'date_fin' => '2026-01-10 12:00:00',
+        'type' => 'Conférence',
+        'lieu' => 'Salle A',
+    ]);
+
+    // Attacher l'intervenant à l'événement
+    $evenement->intervenants()->attach($intervenant->id);
+
+    //  Test Categorie
+    $categorie = Categorie::create([
+        'libelle' => 'Tech',
+        'description' => 'Documents techniques',
+    ]);
+
+    //  Test Document
+    $document = Document::create([
+        'libelle' => 'Article lancement',
+        'description' => 'Document de test',
+        'fichier' => 'artiche',
+        'categorie' => $categorie->id, // obligatoire
+    ]);
+
+    //  Test Membre
+    $membre = Membre::create([
+        'prenom' => 'Awa',
+        'nom' => 'mballo',
+        'sexe' => 'F',
+        'email' => 'awa.mballo@example.com',
+        'telephone' => '770000000',
+        'fonction' => 'Developpeur',
+        'structure' => 'CitizenLab',
+    ]);
+
+    //  Test Podcast
+    $podcast = Podcast::create([
+        'titre' => 'Podcast Tech',
+        'libelle' => 'test podcast',
+        'description' => 'Podcast sur les technologies',
+        'membre' => '01',
+        'fichier'=> ' ijj',
+        'categorie'=> '9',
+        'lien_audio' => 'https://example.com/audio.mp3',
+        'date_publication' => '2026-01-08',
+    ]);
+
+    //  Retourner  toutes les données insérées
+    return response()->json([
+        'intervenant' => $intervenant,
+        'evenement' => $evenement,
+        'document' => $document,
+        'categorie' => $categorie,
+        'membre' => $membre,
+        'podcast' => $podcast,
+    ]);
+});
