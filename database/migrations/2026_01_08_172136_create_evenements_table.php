@@ -18,8 +18,8 @@ return new class extends Migration
     $table->date('date_debut')->nullable();
     $table->date('date_fin')->nullable();
     $table->string('type')->nullable();
-    $table->string('lieu')->nullable();
-    $table->string('lien')->nullable();
+    $table->string('lieu');
+    $table->string('lien');
     $table->timestamps();
 });
 

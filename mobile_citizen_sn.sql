@@ -54,6 +54,19 @@ CREATE TABLE IF NOT EXISTS `sn_categorie` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `sn_categorie`
+--
+
+INSERT INTO `sn_categorie` (`id`, `libelle`, `created_at`, `updated_at`) VALUES
+(1, 'Formation', NOW(), NOW()),
+(2, 'Civic Tech', NOW(), NOW()),
+(3, 'Innovation', NOW(), NOW()),
+(4, 'Sensibilisation', NOW(), NOW()),
+(5, 'Citoyennete', NOW(), NOW()),
+(6, 'Evenement', NOW(), NOW()),
+(7, 'Activites', NOW(), NOW());
+
 -- --------------------------------------------------------
 
 --
@@ -105,7 +118,11 @@ CREATE TABLE IF NOT EXISTS `sn_evenement` (
   `date_debut` date NOT NULL,
   `date_fin` date NOT NULL,
   `type` varchar(245) NOT NULL,
-  `lieu` varchar(245) NOT NULL,
+  `lieu` varchar(245) DEFAULT NULL,
+  `lien` varchar(245) DEFAULT NULL,
+  `heure_debut` varchar(45) NOT NULL,
+  `heure_fin` varchar(45) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)

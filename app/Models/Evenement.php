@@ -13,9 +13,12 @@ class Evenement extends Model
         'description',
         'date_debut',
         'date_fin',
+        'heure_debut',
+        'heure_fin',
         'type',
         'lieu',
-        'lien'
+        'lien',
+        'image'
     ];
 
     public function intervenants()
