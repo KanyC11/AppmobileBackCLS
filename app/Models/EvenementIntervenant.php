@@ -16,16 +16,16 @@ class Evenement extends Model
         'date_fin',
         'type',
         'lieu',
-        'lien', // si tu as ajouté le champ "lien"
+        'lien', 
     ];
 
     public function intervenants()
     {
         return $this->belongsToMany(
             Intervenant::class,
-            'sn_evenemement_intervenant', // table pivot
-            'evenement', // clé étrangère pour Evenement dans la table pivot
-            'intervenant' // clé étrangère pour Intervenant dans la table pivot
+            'sn_evenement_intervenant', 
+            'evenement_id', 
+            'intervenant_id' 
         );
     }
 }

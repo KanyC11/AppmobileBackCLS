@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\{
     IntervenantController,
     EvenementController,
+    EvenementIntervenantController,
     CategorieController,
     DocumentController,
     MembreController,
@@ -16,6 +17,10 @@ Route::apiResource('categories', CategorieController::class);
 Route::apiResource('documents', DocumentController::class);
 Route::apiResource('membres', MembreController::class);
 Route::apiResource('podcasts', PodcastController::class);
+
+
+Route::get('evenement-intervenants', [EvenementIntervenantController::class, 'index']);
+
 
 // Routes  pour les documents
 Route::get('/documents/{id}/download', [DocumentController::class, 'download'])->name('documents.download');
