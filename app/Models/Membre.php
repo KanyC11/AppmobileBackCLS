@@ -10,7 +10,8 @@ class Membre extends Model
 
     protected $fillable = [
         'prenom',
-        'nom'
+        'nom',
+        'lien_photo'
     ];
 
     public function podcasts()
