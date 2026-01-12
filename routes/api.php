@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\{
     MembreController,
     PodcastController
 };
+Route::get('/lastpodcasts', [PodcastController::class, 'lastPodcasts']);
 
 Route::apiResource('intervenants', IntervenantController::class);
 Route::apiResource('evenements', EvenementController::class);
@@ -26,6 +27,7 @@ Route::get('evenement-intervenants', [EvenementIntervenantController::class, 'in
 Route::get('/documents/{id}/download', [DocumentController::class, 'download'])->name('documents.download');
 
 // Routes  pour les podcasts
+
 Route::get('/podcasts/{id}/download', [PodcastController::class, 'download'])->name('podcasts.download');
 Route::get('/podcasts/{id}/stream', [PodcastController::class, 'stream'])->name('podcasts.stream');
 Route::get('/dashboard', function () {

@@ -93,4 +93,13 @@ class PodcastController extends Controller
             ['Content-Type' => 'audio/mpeg']
         );
     }
+    //affichage de 8 podcasts
+    public function lastPodcasts()
+{
+    return \App\Models\Podcast::with(['categorie', 'membre'])
+        ->orderBy('created_at', 'desc')
+        ->limit(8)
+        ->get();
+}
+
 }

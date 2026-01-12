@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
 {
-    // Cette migration n'est plus nécessaire car 'lien' est déjà dans la table 'sn_evenements'
+    // 'lien'  dans la table 'sn_evenements'
 }
 
 public function down(): void
