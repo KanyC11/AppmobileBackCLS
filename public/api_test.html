@@ -76,7 +76,10 @@
       <div class="row">
         <label>Prénom<input name="prenom" required></label>
         <label>Nom<input name="nom" required></label>
-        <label>Lien photo<input name="lien_photo" required></label>
+       <label>Lien Photo
+    <input type="url" name="lien_photo" placeholder="https://exemple.com/image.jpg">
+</label>
+
       </div>
       <button type="submit">Créer membre</button>
     </form>
@@ -131,8 +134,8 @@
         <label>Date fin<input name="date_fin" type="date" required></label>
       </div>
       <div class="row">
-        <label>Heure début<input name="heure_debut" type="time" required></label>
-        <label>Heure fin<input name="heure_fin" type="time" required></label>
+        <label>Heure début<input name="heure_debut" type="text" required></label>
+        <label>Heure fin<input name="heure_fin" type="text" required></label>
       </div>
       <div class="row">
         <label>Type<input name="type" required></label>
@@ -144,21 +147,6 @@
     </form>
   </fieldset>
 
-  <fieldset>
-    <legend>Mise à jour / suppression (exemples)</legend>
-    <p>Pour mettre à jour un enregistrement, renseignez l'ID et utilisez le champ <code>_method</code> vaut <code>PUT</code>.</p>
-
-    <form onsubmit="submitForm(event, '/api/documents/1')" method="post" enctype="multipart/form-data">
-      <input type="hidden" name="_method" value="PUT">
-      <label>Libellé<input name="libelle"></label>
-      <label>Fichier<input name="fichier" type="file" accept=".pdf,.doc,.docx,.txt"></label>
-      <button type="submit">Mettre à jour document #1</button>
-    </form>
-
-    <form onsubmit="submitForm(event, '/api/documents/1')" method="post" style="margin-top:10px">
-      <input type="hidden" name="_method" value="DELETE">
-      <button type="submit">Supprimer document #1</button>
-    </form>
-  </fieldset>
+  
 </body>
 </html>

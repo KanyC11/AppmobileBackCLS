@@ -14,47 +14,35 @@ class MembreController extends Controller
     }
 
     public function store(Request $request)
-{
-    $data = $request->validate([
-        'prenom' => 'required|string',
-        'nom' => 'required|string',
-        'lien_photo' => 'nullable|image|max:2048'
-    ]);
+    {
+        $data = $request->validate([
+            'prenom' => 'required|string',
+            'nom' => 'required|string',
+            'lien_photo' => 'nullable|url'
+        ]);
 
-    if ($request->hasFile('lien_photo')) {
-        $path = $request->file('lien_photo')->store('membres', 'public');
-        $data['lien_photo'] = $path;
+        return Membre::create($data);
     }
-
-    return Membre::create($data);
-}
-
 
     public function show($id)
     {
         return Membre::findOrFail($id);
     }
 
-   public function update(Request $request, $id)
-{
-    $membre = Membre::findOrFail($id);
+    public function update(Request $request, $id)
+    {
+        $membre = Membre::findOrFail($id);
 
-    $data = $request->validate([
-        'prenom' => 'sometimes|string',
-        'nom' => 'sometimes|string',
-        'lien_photo' => 'nullable|image|max:2048'
-    ]);
+        $data = $request->validate([
+            'prenom' => 'sometimes|string',
+            'nom' => 'sometimes|string',
+            'lien_photo' => 'nullable|url'
+        ]);
 
-    if ($request->hasFile('lien_photo')) {
-        $path = $request->file('lien_photo')->store('membres', 'public');
-        $data['lien_photo'] = $path;
+        $membre->update($data);
+
+        return $membre;
     }
-
-    $membre->update($data);
-
-    return $membre;
-}
-
 
     public function destroy($id)
     {

@@ -10,10 +10,20 @@ class EvenementIntervenantController extends Controller
     public function index()
     {
         $data = DB::table('sn_evenement_intervenant')
-            ->join('sn_evenements', 'sn_evenements.id', '=', 'sn_evenement_intervenant.evenement_id')
-            ->join('sn_intervenants', 'sn_intervenants.id', '=', 'sn_evenement_intervenant.intervenant_id')
+            ->join(
+                'sn_evenements',
+                'sn_evenements.id',
+                '=',
+                'sn_evenement_intervenant.evenement'
+            )
+            ->join(
+                'sn_intervenants',
+                'sn_intervenants.id',
+                '=',
+                'sn_evenement_intervenant.intervenant'
+            )
             ->select(
-                'sn_evenement_intervenant.id as id',
+                'sn_evenement_intervenant.id',
                 'sn_evenements.id as evenement_id',
                 'sn_evenements.libelle as evenement_libelle',
                 'sn_intervenants.id as intervenant_id',

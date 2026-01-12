@@ -10,6 +10,10 @@ use App\Http\Controllers\Api\{
     MembreController,
     PodcastController
 };
+
+
+Route::get('/evenement-intervenants', [EvenementIntervenantController::class, 'index']);
+
 Route::get('/lastpodcasts', [PodcastController::class, 'lastPodcasts']);
 
 Route::apiResource('intervenants', IntervenantController::class);
