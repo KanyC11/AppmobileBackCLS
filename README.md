@@ -1,59 +1,142 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+Guide Intégration API Mobile Citizen SN 
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+ API REST accessible via :
+   Développement : http://127.0.0.1:8000/api
 
-## About Laravel
+POINTS D'ACCÈS : 
+ Points d’accès GET pour consultation, téléchargement ou streaming
+Catégories
+Lister toutes les catégories :
+GET http://127.0.0.1:8000/api/categories
+Voir une catégorie :
+GET http://127.0.0.1:8000/api/categories/{id}
+Créer une catégorie :
+POST http://127.0.0.1:8000/api/categories
+Supprimer une catégorie :
+DELETE http://127.0.0.1:8000/api/categories/{id}
+Documents
+Lister tous les documents :
+GET http://127.0.0.1:8000/api/documents
+Voir un document :
+GET http://127.0.0.1:8000/api/documents/{id}
+Créer un document :
+POST http://127.0.0.1:8000/api/documents
+Supprimer un document :
+DELETE http://127.0.0.1:8000/api/documents/{id}
+Événements
+Lister tous les événements :
+GET http://127.0.0.1:8000/api/evenements
+Voir un événement :
+GET http://127.0.0.1:8000/api/evenements/{id}
+Créer un événement :
+POST http://127.0.0.1:8000/api/evenements
+Supprimer un événement :
+DELETE http://127.0.0.1:8000/api/evenements/{id}
+Intervenants
+Lister tous les intervenants :
+GET http://127.0.0.1:8000/api/intervenants
+Voir un intervenant :
+GET http://127.0.0.1:8000/api/intervenants/{id}
+Créer un intervenant :
+POST http://127.0.0.1:8000/api/intervenants
+Supprimer un intervenant :
+DELETE http://127.0.0.1:8000/api/intervenants/{id}
+Membres
+Lister tous les membres :
+GET http://127.0.0.1:8000/api/membres
+Voir un membre :
+GET http://127.0.0.1:8000/api/membres/{id}
+Créer un membre :
+POST http://127.0.0.1:8000/api/membres
+Mettre à jour un membre :
+PUT http://127.0.0.1:8000/api/membres/{id}
+Supprimer un membre :
+DELETE http://127.0.0.1:8000/api/membres/{id}
+Podcasts
+Lister tous les podcasts :
+GET http://127.0.0.1:8000/api/podcasts
+Voir un podcast :
+GET http://127.0.0.1:8000/api/podcasts/{id}
+Créer un podcast :
+POST http://127.0.0.1:8000/api/podcasts
+Mettre à jour un podcast :
+PUT http://127.0.0.1:8000/api/podcasts/{id}
+Supprimer un podcast :
+DELETE http://127.0.0.1:8000/api/podcasts/{id}
+Télécharger un podcast :
+GET http://127.0.0.1:8000/api/podcasts/{id}/download
+Streamer un podcast :
+GET http://127.0.0.1:8000/api/podcasts/{id}/stream
+Récupère les 8 derniers podcasts
+GET http://127.0.0.0:8000/api/lastpodcasts
+Dashboard
+Obtenir toutes les données pour le dashboard :
+GET http://127.0.0.1:8000/api/dashboard
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+CONFIGURATION DE BASE :
+URL de base
+const API_BASE_URL = 'http://127.0.0.1:8000/api';
+Fonction générique pour appeler l’API
+async function apiCall(endpoint, options = {}) {
+   const url = `${API_BASE_URL}${endpoint}`;
+   if (options.body instanceof FormData) delete options.headers?.['Content-Type'];
+   const response = await fetch(url, options);
+   if (!response.ok) {
+ 	const error = await response.json().catch(() => ({ message: response.statusText }));
+ 	throw new Error(error.message || `Erreur ${response.status}`);
+   }
+   return response.json();
+ }
+Gestion des formulaires simplifiée:
+·       Pas d’attribut action sur <form>
+·       onsubmit + event.preventDefault() obligatoire
+·       Les données sont créées directement dans la base après validation
+Exemple : créer un membre directement
+<form onsubmit="handleFormSubmit(event, '/api/membres')" enctype="multipart/form-data">
+   <input type="text" name="prenom" required placeholder="Prénom">
+   <input type="text" name="nom" required placeholder="Nom">
+   <input type="email" name="email" placeholder="Email">
+   <button type="submit">Créer membre</button>
+ </form>
+Fonction JavaScript pour soumission
+async function handleFormSubmit(event, endpoint) {
+   event.preventDefault();
+   const form = event.target;
+   const submitButton = form.querySelector('button[type="submit"]');
+   submitButton.disabled = true;
+   const originalText = submitButton.textContent;
+   submitButton.textContent = 'En cours...';
 
-## Learning Laravel
+   try {
+ 	const formData = new FormData(form);
+ 	const method = form.querySelector('input[name="_method"]')?.value || 'POST';
+ 	const data = await apiCall(endpoint, { method, body: formData });
+ 	alert('Création réussie !');
+ 	form.reset();
+ 	return data;
+   } catch (err) {
+ 	alert(`Erreur : ${err.message}`);
+   } finally {
+ 	submitButton.disabled = false;
+ 	submitButton.textContent = originalText;
+   }
+ }
+Upload de fichiers:
+·       enctype="multipart/form-data" obligatoire
+·       Champ fichier pour documents/podcasts, image pour événements
+·       Formats et tailles à respecter
+Exemple upload document
+<form onsubmit="handleFormSubmit(event, '/api/documents')" enctype="multipart/form-data">
+   <input type="text" name="libelle" required>
+   <input type="file" name="fichier" required>
+   <select name="categorie" required>
+ 	<option value="1">Formation</option>
+   </select>
+   <button type="submit">Uploader</button>
+ </form>
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
