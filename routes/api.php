@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\{
     PodcastController
 };
 
+Route::post('/evenement-intervenants', [EvenementIntervenantController::class, 'store']);
 
 Route::get('/evenement-intervenants', [EvenementIntervenantController::class, 'index']);
 

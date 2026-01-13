@@ -3,20 +3,24 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Intervenant; // importer le model Intervenant
+use App\Models\Intervenant; 
+$evenement->intervenants()->attach($intervenantIds); 
 
 class Evenement extends Model
 {
-    protected $table = 'sn_evenement';
+    protected $table = 'sn_evenements';
 
     protected $fillable = [
         'libelle',
         'description',
         'date_debut',
         'date_fin',
+        'heure_debut',
+        'heure_fin',
         'type',
         'lieu',
-        'lien', 
+        'lien',
+        'image'
     ];
 
     public function intervenants()
@@ -24,8 +28,9 @@ class Evenement extends Model
         return $this->belongsToMany(
             Intervenant::class,
             'sn_evenement_intervenant', 
-            'evenement_id', 
-            'intervenant_id' 
+            'evenement', 
+            'intervenant' 
         );
     }
+    
 }

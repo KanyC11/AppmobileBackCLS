@@ -1,6 +1,6 @@
 Guide Intégration API Mobile Citizen SN 
 
- API REST accessible via :
+ API accessible via :
    Développement : http://127.0.0.1:8000/api
 
 POINTS D'ACCÈS : 
@@ -41,6 +41,9 @@ Créer un intervenant :
 POST http://127.0.0.1:8000/api/intervenants
 Supprimer un intervenant :
 DELETE http://127.0.0.1:8000/api/intervenants/{id}
+Evenement_intervenant
+Lister tous les intervenants :
+GET http://127.0.0.1:8000/api/evenement-intervenants
 Membres
 Lister tous les membres :
 GET http://127.0.0.1:8000/api/membres

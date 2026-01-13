@@ -14,9 +14,24 @@ class IntervenantController extends Controller
     }
 
     public function store(Request $request)
-    {
-        return Intervenant::create($request->all());
+{
+    $data = $request->validate([
+        'prenom' => 'required|string',
+        'nom' => 'required|string',
+        'sexe' => 'nullable|string',
+        'evenements' => 'nullable|array', // ids des événements
+        'evenements.*' => 'integer|exists:sn_evenements,id',
+    ]);
+
+    $intervenant = Intervenant::create($data);
+
+    if (!empty($data['evenements'])) {
+        $intervenant->evenements()->attach($data['evenements']);
     }
+
+    return response()->json($intervenant->load('evenements'), 201);
+}
+
 
     public function show($id)
     {

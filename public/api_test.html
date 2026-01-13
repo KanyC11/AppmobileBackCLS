@@ -49,6 +49,23 @@
       }
     }
   </script>
+  <script>
+    
+fetch('/api/intervenants')
+  .then(res => res.json())
+  .then(data => {
+    const select = document.querySelector('select[name="intervenants[]"]');
+
+    data.forEach(intervenant => {
+      const option = document.createElement('option');
+      option.value = intervenant.id;
+      option.textContent = intervenant.prenom + ' ' + intervenant.nom;
+      select.appendChild(option);
+    });
+  });
+</script>
+
+  
 
   <div class="links">
     <strong>Tables:</strong>
@@ -130,9 +147,14 @@
       <label>Libellé<input name="libelle" required></label>
       <label>Description<textarea name="description" required></textarea></label>
       <div class="row">
-        <label>Date début<input name="date_debut" type="date" required></label>
-        <label>Date fin<input name="date_fin" type="date" required></label>
+        <label>Date début<input name="date_debut" type="text" required></label>
+        <label>Date fin<input name="date_fin" type="text" required></label>
       </div>
+      <label>Intervenants</label>
+<select name="intervenants[]" multiple size="5">
+  <!-- Les options seront injectées en JS -->
+</select>
+
       <div class="row">
         <label>Heure début<input name="heure_debut" type="text" required></label>
         <label>Heure fin<input name="heure_fin" type="text" required></label>
