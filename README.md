@@ -1,102 +1,199 @@
-Guide Intégration API Mobile Citizen SN 
+# Guide Intégration API Mobile Citizen SN
 
- API accessible via :
-   Développement : http://127.0.0.1:8000/api
+# Pre requis
 
-POINTS D'ACCÈS : 
- Points d’accès GET pour consultation, téléchargement ou streaming
+PHP > 8.2
+
+# Demarer le projet
+
+## 1. Cloner le projet
+
+Faites `git clone https://github.com/KanyC11/AppmobileBackCLS.git`
+
+## 2. Installation des dependances
+
+Faites un `composer install`
+
+## 3. Configurer l'environnement
+
+Taper `cp .env.example .env`
+
+## 4. Générer la clé d'application
+
+php artisan key:generate
+
+## 5. Migration de la base de données
+
+php artisan migrate
+
+## 6. Lancer le serveur
+
+php artisan serve
+
+## API accessible via :
+
+Développement : http://127.0.0.1:8000/api
+
+## POINTS D'ACCÈS :
+
+Points d’accès GET pour consultation, téléchargement ou streaming
 Catégories
-Lister toutes les catégories :
+
+## Lister toutes les catégories :
+
 GET http://127.0.0.1:8000/api/categories
-Voir une catégorie :
+
+## Voir une catégorie :
+
 GET http://127.0.0.1:8000/api/categories/{id}
-Créer une catégorie :
+
+## Créer une catégorie :
+
 POST http://127.0.0.1:8000/api/categories
 Supprimer une catégorie :
 DELETE http://127.0.0.1:8000/api/categories/{id}
-Documents
-Lister tous les documents :
+
+## Documents
+
+### Lister tous les documents :
+
 GET http://127.0.0.1:8000/api/documents
-Voir un document :
+
+### Voir un document :
+
 GET http://127.0.0.1:8000/api/documents/{id}
-Créer un document :
+
+### Créer un document :
+
 POST http://127.0.0.1:8000/api/documents
 Supprimer un document :
 DELETE http://127.0.0.1:8000/api/documents/{id}
-Événements
-Lister tous les événements :
+
+## Événements
+
+### Lister tous les événements :
+
 GET http://127.0.0.1:8000/api/evenements
-Voir un événement :
+
+### Voir un événement :
+
 GET http://127.0.0.1:8000/api/evenements/{id}
-Créer un événement :
+
+### Créer un événement :
+
 POST http://127.0.0.1:8000/api/evenements
-Supprimer un événement :
+
+### Supprimer un événement :
+
 DELETE http://127.0.0.1:8000/api/evenements/{id}
-Intervenants
-Lister tous les intervenants :
+
+## Intervenants
+
+### Lister tous les intervenants :
+
 GET http://127.0.0.1:8000/api/intervenants
-Voir un intervenant :
+
+### Voir un intervenant :
+
 GET http://127.0.0.1:8000/api/intervenants/{id}
-Créer un intervenant :
+
+### Créer un intervenant :
+
 POST http://127.0.0.1:8000/api/intervenants
-Supprimer un intervenant :
+
+### Supprimer un intervenant :
+
 DELETE http://127.0.0.1:8000/api/intervenants/{id}
-Evenement_intervenant
-Lister tous les intervenants :
+
+## Evenement_intervenant
+
+### Lister tous les intervenants :
+
 GET http://127.0.0.1:8000/api/evenement-intervenants
-Membres
-Lister tous les membres :
+
+## Membres
+
+### Lister tous les membres :
+
 GET http://127.0.0.1:8000/api/membres
-Voir un membre :
+
+### Voir un membre :
+
 GET http://127.0.0.1:8000/api/membres/{id}
-Créer un membre :
+
+### Créer un membre :
+
 POST http://127.0.0.1:8000/api/membres
-Mettre à jour un membre :
+
+### Mettre à jour un membre :
+
 PUT http://127.0.0.1:8000/api/membres/{id}
-Supprimer un membre :
+
+### Supprimer un membre :
+
 DELETE http://127.0.0.1:8000/api/membres/{id}
-Podcasts
-Lister tous les podcasts :
+
+## Podcasts
+
+### Lister tous les podcasts :
+
 GET http://127.0.0.1:8000/api/podcasts
-Voir un podcast :
+
+### Voir un podcast :
+
 GET http://127.0.0.1:8000/api/podcasts/{id}
-Créer un podcast :
+
+### Créer un podcast :
+
 POST http://127.0.0.1:8000/api/podcasts
-Mettre à jour un podcast :
+
+### Mettre à jour un podcast :
+
 PUT http://127.0.0.1:8000/api/podcasts/{id}
-Supprimer un podcast :
+
+### Supprimer un podcast :
+
 DELETE http://127.0.0.1:8000/api/podcasts/{id}
-Télécharger un podcast :
+
+### Télécharger un podcast :
+
 GET http://127.0.0.1:8000/api/podcasts/{id}/download
-Streamer un podcast :
+
+### Streamer un podcast :
+
 GET http://127.0.0.1:8000/api/podcasts/{id}/stream
-Récupère les 8 derniers podcasts
+
+### Récupère les 8 derniers podcasts
+
 GET http://127.0.0.0:8000/api/lastpodcasts
-Dashboard
-Obtenir toutes les données pour le dashboard :
+
+## Dashboard
+
+### Obtenir toutes les données pour le dashboard :
+
 GET http://127.0.0.1:8000/api/dashboard
 
+# CONFIGURATION DE BASE :
 
-
-CONFIGURATION DE BASE :
 URL de base
 const API_BASE_URL = 'http://127.0.0.1:8000/api';
 Fonction générique pour appeler l’API
 async function apiCall(endpoint, options = {}) {
-   const url = `${API_BASE_URL}${endpoint}`;
-   if (options.body instanceof FormData) delete options.headers?.['Content-Type'];
-   const response = await fetch(url, options);
-   if (!response.ok) {
- 	const error = await response.json().catch(() => ({ message: response.statusText }));
- 	throw new Error(error.message || `Erreur ${response.status}`);
-   }
-   return response.json();
- }
+const url = `${API_BASE_URL}${endpoint}`;
+if (options.body instanceof FormData) delete options.headers?.['Content-Type'];
+const response = await fetch(url, options);
+if (!response.ok) {
+const error = await response.json().catch(() => ({ message: response.statusText }));
+throw new Error(error.message || `Erreur ${response.status}`);
+}
+return response.json();
+}
 Gestion des formulaires simplifiée:
-·       Pas d’attribut action sur <form>
-·       onsubmit + event.preventDefault() obligatoire
-·       Les données sont créées directement dans la base après validation
+· Pas d’attribut action sur <form>
+· onsubmit + event.preventDefault() obligatoire
+· Les données sont créées directement dans la base après validation
 Exemple : créer un membre directement
+
 <form onsubmit="handleFormSubmit(event, '/api/membres')" enctype="multipart/form-data">
    <input type="text" name="prenom" required placeholder="Prénom">
    <input type="text" name="nom" required placeholder="Nom">
@@ -112,25 +209,26 @@ async function handleFormSubmit(event, endpoint) {
    const originalText = submitButton.textContent;
    submitButton.textContent = 'En cours...';
 
-   try {
- 	const formData = new FormData(form);
- 	const method = form.querySelector('input[name="_method"]')?.value || 'POST';
- 	const data = await apiCall(endpoint, { method, body: formData });
- 	alert('Création réussie !');
- 	form.reset();
- 	return data;
-   } catch (err) {
- 	alert(`Erreur : ${err.message}`);
-   } finally {
- 	submitButton.disabled = false;
- 	submitButton.textContent = originalText;
-   }
- }
+try {
+const formData = new FormData(form);
+const method = form.querySelector('input[name="_method"]')?.value || 'POST';
+const data = await apiCall(endpoint, { method, body: formData });
+alert('Création réussie !');
+form.reset();
+return data;
+} catch (err) {
+alert(`Erreur : ${err.message}`);
+} finally {
+submitButton.disabled = false;
+submitButton.textContent = originalText;
+}
+}
 Upload de fichiers:
-·       enctype="multipart/form-data" obligatoire
-·       Champ fichier pour documents/podcasts, image pour événements
-·       Formats et tailles à respecter
+· enctype="multipart/form-data" obligatoire
+· Champ fichier pour documents/podcasts, image pour événements
+· Formats et tailles à respecter
 Exemple upload document
+
 <form onsubmit="handleFormSubmit(event, '/api/documents')" enctype="multipart/form-data">
    <input type="text" name="libelle" required>
    <input type="file" name="fichier" required>
@@ -139,7 +237,3 @@ Exemple upload document
    </select>
    <button type="submit">Uploader</button>
  </form>
-
-
-
-
