@@ -20,7 +20,7 @@ Taper `cp .env.example .env`
 
 ## 4. Générer la clé d'application
 
-php artisan key:generate
+`php artisan key:generate`
 
 ## 5. Migration de la base de données
 
@@ -28,7 +28,7 @@ php artisan migrate
 
 ## 6. Lancer le serveur
 
-php artisan serve
+`php artisan serve`
 
 ## API accessible via :
 
@@ -172,68 +172,3 @@ GET http://127.0.0.0:8000/api/lastpodcasts
 ### Obtenir toutes les données pour le dashboard :
 
 GET http://127.0.0.1:8000/api/dashboard
-
-# CONFIGURATION DE BASE :
-
-URL de base
-const API_BASE_URL = 'http://127.0.0.1:8000/api';
-Fonction générique pour appeler l’API
-async function apiCall(endpoint, options = {}) {
-const url = `${API_BASE_URL}${endpoint}`;
-if (options.body instanceof FormData) delete options.headers?.['Content-Type'];
-const response = await fetch(url, options);
-if (!response.ok) {
-const error = await response.json().catch(() => ({ message: response.statusText }));
-throw new Error(error.message || `Erreur ${response.status}`);
-}
-return response.json();
-}
-Gestion des formulaires simplifiée:
-· Pas d’attribut action sur <form>
-· onsubmit + event.preventDefault() obligatoire
-· Les données sont créées directement dans la base après validation
-Exemple : créer un membre directement
-
-<form onsubmit="handleFormSubmit(event, '/api/membres')" enctype="multipart/form-data">
-   <input type="text" name="prenom" required placeholder="Prénom">
-   <input type="text" name="nom" required placeholder="Nom">
-   <input type="email" name="email" placeholder="Email">
-   <button type="submit">Créer membre</button>
- </form>
-Fonction JavaScript pour soumission
-async function handleFormSubmit(event, endpoint) {
-   event.preventDefault();
-   const form = event.target;
-   const submitButton = form.querySelector('button[type="submit"]');
-   submitButton.disabled = true;
-   const originalText = submitButton.textContent;
-   submitButton.textContent = 'En cours...';
-
-try {
-const formData = new FormData(form);
-const method = form.querySelector('input[name="_method"]')?.value || 'POST';
-const data = await apiCall(endpoint, { method, body: formData });
-alert('Création réussie !');
-form.reset();
-return data;
-} catch (err) {
-alert(`Erreur : ${err.message}`);
-} finally {
-submitButton.disabled = false;
-submitButton.textContent = originalText;
-}
-}
-Upload de fichiers:
-· enctype="multipart/form-data" obligatoire
-· Champ fichier pour documents/podcasts, image pour événements
-· Formats et tailles à respecter
-Exemple upload document
-
-<form onsubmit="handleFormSubmit(event, '/api/documents')" enctype="multipart/form-data">
-   <input type="text" name="libelle" required>
-   <input type="file" name="fichier" required>
-   <select name="categorie" required>
- 	<option value="1">Formation</option>
-   </select>
-   <button type="submit">Uploader</button>
- </form>
