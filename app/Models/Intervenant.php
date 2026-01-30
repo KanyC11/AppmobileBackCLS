@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Evenement; 
+use App\Models\Evenement;
 
 class Intervenant extends Model
 {
@@ -20,8 +20,8 @@ class Intervenant extends Model
         return $this->belongsToMany(
             Evenement::class,
             'sn_evenement_intervenant',
-            'intervenant',
-            'evenement'
-          )->withTimestamps();
+            'intervenant_id',
+            'evenement_id'
+        )->withTimestamps();
     }
 }

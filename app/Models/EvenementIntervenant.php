@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Intervenant; 
-$evenement->intervenants()->attach($intervenantIds); 
+use App\Models\Intervenant;
+$evenement->intervenants()->attach($intervenantIds);
 
 class Evenement extends Model
 {
@@ -27,10 +27,10 @@ class Evenement extends Model
     {
         return $this->belongsToMany(
             Intervenant::class,
-            'sn_evenement_intervenant', 
-            'evenement', 
-            'intervenant' 
+            'sn_evenement_intervenant',
+            'evenement_id',
+            'intervenant_id'
         );
     }
-    
+
 }
