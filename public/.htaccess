@@ -23,3 +23,11 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+<IfModule mod_headers.c>
+    <FilesMatch "\.(mp3|wav|ogg)$">
+        Header set Access-Control-Allow-Origin "*"
+        Header set Access-Control-Allow-Methods "GET, OPTIONS"
+        Header set Access-Control-Allow-Headers "Range"
+        Header set Access-Control-Expose-Headers "Content-Range, Content-Length, Accept-Ranges"
+    </FilesMatch>
+</IfModule>
