@@ -24,7 +24,7 @@ Taper `cp .env.example .env`
 
 ## 5. Migration de la base de données
 
-php artisan migrate
+php artisan migrate ou tout simplement importer la base de données sans la migration
 
 ## 6. Lancer le serveur
 
