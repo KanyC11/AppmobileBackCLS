@@ -17,7 +17,7 @@ class UpdateDocumentRequest extends FormRequest
             'libelle' => 'sometimes|required|string|max:255',
             'description' => 'nullable|string',
             'categorie_id' => 'sometimes|required|exists:sn_categories,id',
-            'fichier' => 'nullable|file|mimes:pdf,doc,docx,txt|max:10240',
+            'fichier' => 'nullable|file|mimes:pdf,doc,docx,txt',
         ];
     }
 
@@ -28,7 +28,6 @@ class UpdateDocumentRequest extends FormRequest
             'categorie_id.required' => 'La catégorie est obligatoire',
             'categorie_id.exists' => 'La catégorie sélectionnée n\'existe pas',
             'fichier.mimes' => 'Le fichier doit être au format PDF, DOC, DOCX ou TXT',
-            'fichier.max' => 'Le fichier ne doit pas dépasser 10 MB',
         ];
     }
 }
